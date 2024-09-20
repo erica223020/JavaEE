@@ -107,7 +107,53 @@ public class CreateCustomer extends HttpServlet {
 
 	protected void processCC2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		RequestDispatcher view;
+		LinkedList<String> errorMsgs = new LinkedList<>(); //放錯誤訊息
+		request.setAttribute("errors", errorMsgs);//Reques-Scope
+		
+		//1. Retrieve From Data
+		String birth = request.getParameter("birth");
+		String gender = request.getParameter("gender");
+		String[] habit = request.getParameterValues("habit");
+
+		//2. Convert From Data
+		//N/A
+		//3. Validate From Data
+		if(birth == null || birth.trim().isEmpty()) { //空白或去空白後還是空 
+			errorMsgs.add("請挑選您的生日"); 
+		}
+		if(gender == null) { //空白或去空白後還是空 
+			errorMsgs.add("請勾選您的性別"); 
+		}   
+		if(habit == null) { //空白或去空白後還是空 
+			errorMsgs.add("請至少勾選一項運動"); 
+		}  
+		
+		if(!errorMsgs.isEmpty()) {
+			view = request.getRequestDispatcher("createCustomer2.jsp");
+			view.forward(request, response);
+			return; //把控制權還給Container
+		}
+		
+		//4. Invoke Biz Logic
+		try {
+			HttpSession session = request.getSession();
+			Customer cust = (Customer)session.getAttribute("cust");
+
+			cust.setBirth(birth);
+			cust.setGender(gender);
+			cust.setHabits(habit);
+			session.setAttribute("cust", cust); //Requst-Scope
+
+			view = request.getRequestDispatcher("createSuccessful.jsp");
+			view.forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+			errorMsgs.add(e.getMessage());
+			view = request.getRequestDispatcher("createCustomer2.jsp");
+			view.forward(request, response);
+		}
 	}
 
 }

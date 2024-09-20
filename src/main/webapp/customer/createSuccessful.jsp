@@ -22,5 +22,6 @@
 	</table>
 	<br/>
 	<a href="../">Go Home</a>
+	<% session.invalidate();%>
 </body>
 </html>
