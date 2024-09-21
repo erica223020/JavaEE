@@ -9,7 +9,7 @@
 <link href="<%= request.getContextPath() %>/style/myStyle.css" rel="stylesheet"/>
 </head>
 <body>
-	<h2>新增顧客</h2>
+	<h2>新增顧客(1)</h2>
 	<%--Start Error Report --%>
 	<% LinkedList<String> errors = (LinkedList<String>)request.getAttribute("errors");%>
 	<% if(errors != null){ %>

@@ -8,8 +8,8 @@
 <link href="<%= request.getContextPath() %>/style/myStyle.css" rel="stylesheet"/>
 </head>
 <body>
-	<h2>建立顧客資料</h2>
-	<form action="ccController.do" method="post">
+	<h2>新增顧客(2)</h2>
+	<form action="createCustomer.do" method="post">
 	<input type="hidden" name="action" value="cc2"/>
 		<table border="0" style="margin: auto; text-align: left">
 			<tbody>
